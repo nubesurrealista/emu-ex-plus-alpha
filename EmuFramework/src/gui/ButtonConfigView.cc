@@ -68,10 +68,10 @@ ButtonConfigView::ButtonConfigView(ViewAttachParams attach, InputManagerView &ro
 	rootIMView{rootIMView_},
 	reset
 	{
-		"Unbind All", attach,
+		"Desvincular todo", attach,
 		[this](const Input::Event &e)
 		{
-			pushAndShowModal(makeView<YesNoAlertView>("Really unbind all keys in this category?",
+			pushAndShowModal(makeView<YesNoAlertView>("¿Realmente quieres desvincular todos los botones de esta categoría?",
 				YesNoAlertView::Delegates
 				{
 					.onYes = [this]
@@ -88,10 +88,10 @@ ButtonConfigView::ButtonConfigView(ViewAttachParams attach, InputManagerView &ro
 	},
 	resetDefaults
 	{
-		"Reset Defaults", attach,
+		"Reiniciar a predeterminado", attach,
 		[this](const Input::Event &e)
 		{
-			pushAndShowModal(makeView<YesNoAlertView>("Really reset all keys in this category to defaults?",
+			pushAndShowModal(makeView<YesNoAlertView>("¿Realmente quieres reiniciar estos botones a su configuración predeterminada?",
 				YesNoAlertView::Delegates
 				{
 					.onYes = [this]
@@ -271,7 +271,7 @@ bool ButtonConfigSetView::inputEvent(const Input::Event& e, ViewInputEventParams
 					{
 						savedDev = d;
 						app().postMessage(7, false,
-							std::format("You pushed a key from device:\n{}\nPush another from it to open its config menu",
+							std::format("Has presionado un botón del dispositivo:\n{}\nPresiona otro botón para abrir su menú de configuración",
 							inputDevData(*d).displayName));
 						postDraw();
 					}
@@ -284,7 +284,7 @@ bool ButtonConfigSetView::inputEvent(const Input::Event& e, ViewInputEventParams
 				if((std::ranges::contains(pushedKeys, Input::Keycode::GAME_L2) || std::ranges::contains(pushedKeys, Input::Keycode::GAME_R2)) &&
 					(keyEv.key() == Input::Keycode::JS_LTRIGGER_AXIS || keyEv.key() == Input::Keycode::JS_RTRIGGER_AXIS))
 				{
-					log.info("ignoring trigger axis to avoid duplicate events since L2/R2 keys are pushed");
+					log.info("Eje de gatillo ignorado para evitar duplicados (L2/R2 presionados)");
 					return true;
 				}
 				pushedKeys.tryPushBack(keyEv.key());
@@ -333,9 +333,9 @@ void ButtonConfigSetView::draw(Gfx::RendererCommands&__restrict__ cmds, ViewDraw
 void ButtonConfigSetView::onAddedToController(ViewController *, const Input::Event &e)
 {
 	if(e.motionEvent())
-		text.resetString(std::format("Push up to 3 keys, release any to set:\n{}", actionStr));
+		text.resetString(std::format("Presiona hasta 3 botones, libera alguno para ajustar:\n{}", actionStr));
 	else
-		text.resetString(std::format("Push up to 3 keys, release any to set:\n{}\n\nTo unbind:\nQuickly push [Left] key twice in previous menu", actionStr));
+		text.resetString(std::format("Presiona hasta 3 botones, libera alguno para ajustar:\n{}\n\nPara desvincular:\nPresione rápidamente la tecla [Izquierda] dos veces en el menú anterior", actionStr));
 	if(e.motionEvent())
 	{
 		initPointerUI();
