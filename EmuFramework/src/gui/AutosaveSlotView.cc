@@ -46,7 +46,7 @@ public:
 		slotName{slotName_},
 		rename
 		{
-			"Rename", attach,
+			"Renombrar", attach,
 			[this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueInputView<const char*>(attachParams(), e,
@@ -55,12 +55,12 @@ public:
 					{
 						if(appContext().fileUriExists(system().contentLocalSaveDirectory(str)))
 						{
-							app().postErrorMessage("A save slot with that name already exists");
+							app().postErrorMessage("Una ranura de guardado con ese nombre ya existe");
 							return false;
 						}
 						if(!app().autosaveManager.renameSlot(slotName, str))
 						{
-							app().postErrorMessage("Error renaming save slot");
+							app().postErrorMessage("Error al renombrar ranura");
 							return false;
 						}
 						srcView.updateItem(slotName, str);
@@ -71,15 +71,15 @@ public:
 		},
 		remove
 		{
-			"Delete", attach,
+			"Borrar", attach,
 			[this](const Input::Event &e)
 			{
 				if(slotName == app().autosaveManager.slotName())
 				{
-					app().postErrorMessage("Can't delete the currently active save slot");
+					app().postErrorMessage("No se puede borrar la ranura de guardado actualmente activa");
 					return;
 				}
-				pushAndShowModal(makeView<YesNoAlertView>("Really delete this save slot?",
+				pushAndShowModal(makeView<YesNoAlertView>("¿Realmente quieres borrar esta ranura de guardado?",
 					YesNoAlertView::Delegates
 					{
 						.onYes = [this]
@@ -104,7 +104,7 @@ private:
 
 ManageAutosavesView::ManageAutosavesView(ViewAttachParams attach, AutosaveSlotView &srcView,
 	const std::vector<SlotTextMenuItem> &items):
-	TableView{"Manage Save Slots", attach, extraSlotItems},
+	TableView{"Administrar ranuras de guardado", attach, extraSlotItems},
 	srcView{srcView}
 {
 	extraSlotItems.reserve(items.size());
@@ -121,7 +121,7 @@ static std::string slotDescription(EmuApp &app, std::string_view saveName)
 {
 	auto desc = app.appContext().fileUriFormatLastWriteTimeLocal(app.autosaveManager.statePath(saveName));
 	if(desc.empty())
-		desc = "No saved state";
+		desc = "No hay estados guardados";
 	return desc;
 }
 
@@ -144,23 +144,23 @@ void ManageAutosavesView::updateItem(std::string_view name, std::string_view new
 }
 
 AutosaveSlotView::AutosaveSlotView(ViewAttachParams attach):
-	TableView{"Autosave Slot", attach, menuItems},
+	TableView{"Ranura de auto-guardado", attach, menuItems},
 	newSlot
 	{
-		"Create New Save Slot", attach, [this](const Input::Event &e)
+		"Crear nueva ranura de guardado", attach, [this](const Input::Event &e)
 		{
 			pushAndShowNewCollectValueInputView<const char*>(attachParams(), e,
-				"Save Slot Name", "", [this](CollectTextInputView &, auto str_)
+				"Guardar nombre de ranura", "", [this](CollectTextInputView &, auto str_)
 			{
 				std::string_view name{str_};
 				if(appContext().fileUriExists(app().system().contentLocalSaveDirectory(name)))
 				{
-					app().postErrorMessage("A save slot with that name already exists");
+					app().postErrorMessage("Una ranura de guardado con ese nombre ya existe");
 					return false;
 				}
 				if(!app().autosaveManager.setSlot(name))
 				{
-					app().postErrorMessage("Error creating save slot");
+					app().postErrorMessage("Error creando ranura");
 					return false;
 				}
 				app().showEmulation();
@@ -171,11 +171,11 @@ AutosaveSlotView::AutosaveSlotView(ViewAttachParams attach):
 	},
 	manageSlots
 	{
-		"Manage Save Slots", attach, [this](const Input::Event &e)
+		"Administrar ranuras de guardado", attach, [this](const Input::Event &e)
 		{
 			if(extraSlotItems.empty())
 			{
-				app().postMessage("No extra save slots exist");
+				app().postMessage("No existen ranuras de guardado");
 				return;
 			}
 			pushAndShow(makeView<ManageAutosavesView>(*this, extraSlotItems), e);
@@ -225,7 +225,7 @@ void AutosaveSlotView::refreshSlots()
 	}, {.test = true});
 	noSaveSlot =
 	{
-		"No Save",
+		"No guardar",
 		attachParams(), [this]()
 		{
 			if(app().autosaveManager.setSlot(noAutosaveName))
