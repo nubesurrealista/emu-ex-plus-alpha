@@ -31,10 +31,10 @@ static auto slotHeadingName(EmuSystem &sys)
 }
 
 StateSlotView::StateSlotView(ViewAttachParams attach):
-	TableView{"Save States", attach, menuItems},
+	TableView{"Estados guardados", attach, menuItems},
 	load
 	{
-		"Load State", attach,
+		"Cargar estados", attach,
 		[this](TextMenuItem &item, View &, const Input::Event &e)
 		{
 			if(!item.active())
@@ -52,7 +52,7 @@ StateSlotView::StateSlotView(ViewAttachParams attach):
 	},
 	save
 	{
-		"Save State", attach,
+		"Guardar estado", attach,
 		[this](const Input::Event &e)
 		{
 			if(app().shouldOverwriteExistingState())
@@ -61,7 +61,7 @@ StateSlotView::StateSlotView(ViewAttachParams attach):
 			}
 			else
 			{
-				pushAndShowModal(makeView<YesNoAlertView>("Really overwrite state?",
+				pushAndShowModal(makeView<YesNoAlertView>("¿Realmente quieres reemplazar este estado?",
 					YesNoAlertView::Delegates{.onYes = [this]{ doSaveState(); }}), e);
 			}
 		}
