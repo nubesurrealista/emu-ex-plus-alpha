@@ -28,7 +28,7 @@ constexpr SystemLogger log{"BundledGamesView"};
 BundledGamesView::BundledGamesView(ViewAttachParams attach):
 	TableView
 	{
-		"Bundled Content",
+		"Contenido incluido",
 		attach,
 		game
 	},
