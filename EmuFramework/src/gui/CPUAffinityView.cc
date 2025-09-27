@@ -22,16 +22,16 @@ namespace EmuEx
 {
 
 CPUAffinityView::CPUAffinityView(ViewAttachParams attach, int cpuCount):
-	TableView{"Configure CPU Affinity", attach, menuItems},
+	TableView{"Configurar afinidad de la CPU", attach, menuItems},
 	affinityModeItems
 	{
-		{"Auto (Use only performance cores or hints for low latency)", attach, {.id = CPUAffinityMode::Auto}},
-		{"Any (Use any core even if it increases latency)",            attach, {.id = CPUAffinityMode::Any}},
-		{"Manual (Use cores set in previous menu)",                    attach, {.id = CPUAffinityMode::Manual}},
+		{"Automático (usar solo núcleos de rendimiento o sugerencias para baja latencia)", attach, {.id = CPUAffinityMode::Auto}},
+		{"Cualquiera (use cualquier núcleo incluso si aumenta la latencia)",            attach, {.id = CPUAffinityMode::Any}},
+		{"Manual (Usar núcleos establecidos en el menú anterior)",                    attach, {.id = CPUAffinityMode::Manual}},
 	},
 	affinityMode
 	{
-		"CPU Affinity Mode", attach,
+		"Modo de afinidad de la CPU", attach,
 		MenuId{app().cpuAffinityMode.value()},
 		affinityModeItems,
 		{
@@ -43,7 +43,7 @@ CPUAffinityView::CPUAffinityView(ViewAttachParams attach, int cpuCount):
 			.defaultItemOnSelect = [this](TextMenuItem &item) { app().cpuAffinityMode = CPUAffinityMode(item.id.val); }
 		},
 	},
-	cpusHeading{"Manual CPU Affinity", attach}
+	cpusHeading{"Afinidad manual de CPU", attach}
 {
 	menuItems.emplace_back(&affinityMode);
 	menuItems.emplace_back(&cpusHeading);
