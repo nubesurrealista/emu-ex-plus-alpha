@@ -35,7 +35,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	TableView{"GUI Options", attach, item},
 	pauseUnfocused
 	{
-		"Pause if unfocused", attach,
+		"Pausar al perder el foco", attach,
 		app().pauseUnfocused,
 		[this](BoolMenuItem &item)
 		{
@@ -71,7 +71,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	fontSize
 	{
-		"Font Size", attach,
+		"Tamaño de fuente", attach,
 		MenuId{app().fontSize},
 		fontSizeItem,
 		{
@@ -85,7 +85,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	notificationIcon
 	{
-		"Suspended App Icon", attach,
+		"Icono de app en suspensión", attach,
 		app().showsNotificationIcon,
 		[this](BoolMenuItem &item)
 		{
@@ -100,7 +100,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	statusBar
 	{
-		"Hide Status Bar", attach,
+		"Esconder barra de estado", attach,
 		MenuId(InEmuTristate(app().hidesStatusBar.value())),
 		statusBarItem,
 		MultiChoiceMenuItem::Config
@@ -116,7 +116,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	lowProfileOSNav
 	{
-		"Dim OS UI", attach,
+		"Atenuar interfaz del sistema", attach,
 		MenuId(InEmuTristate(app().lowProfileOSNav.value())),
 		lowProfileOSNavItem,
 		MultiChoiceMenuItem::Config
@@ -132,7 +132,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	hideOSNav
 	{
-		"Hide OS Navigation", attach,
+		"Esconder navegación del sistema", attach,
 		MenuId(InEmuTristate(app().hidesOSNav.value())),
 		hideOSNavItem,
 		MultiChoiceMenuItem::Config
@@ -142,7 +142,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	idleDisplayPowerSave
 	{
-		"Allow Screen Timeout In Emulation", attach,
+		"Permitir apagado de pantalla durante la emulación", attach,
 		app().idleDisplayPowerSave,
 		[this](BoolMenuItem &item)
 		{
@@ -151,7 +151,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	navView
 	{
-		"Title Bar", attach,
+		"Barra de título", attach,
 		app().showsTitleBar,
 		[this](BoolMenuItem &item)
 		{
@@ -160,7 +160,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	backNav
 	{
-		"Title Back Navigation", attach,
+		"Volver al menú de títulos", attach,
 		attach.viewManager.needsBackControl,
 		[this](BoolMenuItem &item)
 		{
@@ -171,9 +171,9 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	systemActionsIsDefaultMenu
 	{
-		"Default Menu", attach,
+		"Menú predeterminado", attach,
 		app().systemActionsIsDefaultMenu,
-		"Last Used", "System Actions",
+		"Último usado", "Acciones del sistema",
 		[this](BoolMenuItem &item)
 		{
 			app().systemActionsIsDefaultMenu = item.flipBoolValue(*this);
@@ -181,7 +181,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	showBundledGames
 	{
-		"Show Bundled Content", attach,
+		"Mostrar contenido incluido", attach,
 		app().showsBundledGames,
 		[this](BoolMenuItem &item)
 		{
@@ -190,7 +190,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	showBluetoothScan
 	{
-		"Show Bluetooth Menu Items", attach,
+		"Mostrar elementos de Bluetooth en el menú", attach,
 		app().showsBluetoothScan,
 		[this](BoolMenuItem &item)
 		{
@@ -199,7 +199,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	showHiddenFiles
 	{
-		"Show Hidden Files", attach,
+		"Mostrar archivos ocultos", attach,
 		app().showHiddenFilesInPicker,
 		[this](BoolMenuItem &item)
 		{
@@ -208,7 +208,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	maxRecentContent
 	{
-		"Max Recent Content Items", std::to_string(app().recentContent.maxRecentContent), attach,
+		"Maximo de elementos recientes", std::to_string(app().recentContent.maxRecentContent), attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShowNewCollectValueRangeInputView<int, 1, 100>(attachParams(), e,
@@ -223,7 +223,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	orientationHeading
 	{
-		"Orientation", attach
+		"Orientación", attach
 	},
 	menuOrientationItem
 	{
@@ -235,7 +235,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	menuOrientation
 	{
-		"In Menu", attach,
+		"En menú", attach,
 		MenuId{uint8_t(app().menuOrientation.value())},
 		menuOrientationItem,
 		{
@@ -252,7 +252,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	emuOrientation
 	{
-		"In Emu", attach,
+		"En el emu", attach,
 		MenuId{uint8_t(app().emuOrientation.value())},
 		emuOrientationItem,
 		{
@@ -261,7 +261,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	layoutBehindSystemUI
 	{
-		"Display Behind OS UI", attach,
+		"Mostrar detrás de la UI", attach,
 		app().doesLayoutBehindSystemUI(),
 		[this](BoolMenuItem &item)
 		{
@@ -270,11 +270,11 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	setWindowSize
 	{
-		"Set Window Size", attach,
+		"Establecer tamaño de ventana", attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShowNewCollectValuePairRangeInputView<int, 320, 8192, 240, 8192>(attachParams(), e,
-				"Input Width & Height", "",
+				"Ancho y alto de entrada", "",
 				[this](CollectTextInputView &, auto val)
 				{
 					app().emuWindow().setSize({val.first, val.second});
@@ -284,7 +284,7 @@ GUIOptionView::GUIOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	toggleFullScreen
 	{
-		"Toggle Full Screen", attach,
+		"Alternar pantalla completa", attach,
 		[this]{ app().emuWindow().toggleFullScreen(); }
 	}
 {
