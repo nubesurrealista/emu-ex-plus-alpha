@@ -51,10 +51,10 @@ static std::string saveAutosaveName(EmuApp &app)
 }
 
 SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
-	TableView{"System Actions", attach, item},
+	TableView{"Acciones del sistema", attach, item},
 	cheats
 	{
-		"Cheats", attach,
+		"Trucos", attach,
 		[this](const Input::Event &e)
 		{
 			if(system().hasContent())
@@ -65,7 +65,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	reset
 	{
-		"Reset", attach,
+		"Reiniciar", attach,
 		[this](const Input::Event &e)
 		{
 			if(!system().hasContent())
@@ -98,7 +98,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	revertAutosave
 	{
-		"Load Autosave State", attach,
+		"Cargar estado auto guardado", attach,
 		[this](TextMenuItem &item, const Input::Event &e)
 		{
 			if(!item.active())
@@ -122,7 +122,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	stateSlot
 	{
-		"Manual Save States", attach,
+		"Estados manualmente guardados", attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShow(makeView<StateSlotView>(), e);
@@ -130,7 +130,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	inputOverrides
 	{
-		"Input Overrides", attach,
+		"Reemplazos de entrada", attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShow(makeView<InputOverridesView>(app().inputManager), e);
@@ -138,7 +138,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	addLauncherIcon
 	{
-		"Add Content Shortcut To Launcher", attach,
+		"Añadir contenido al launcher", attach,
 		[this](const Input::Event &e)
 		{
 			if(!system().hasContent())
@@ -159,7 +159,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	screenshot
 	{
-		"Screenshot Next Frame", attach,
+		"Tomar captura del siguiente frame", attach,
 		[this](const Input::Event &e)
 		{
 			if(!system().hasContent())
@@ -183,13 +183,13 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	resetSessionOptions
 	{
-		"Reset Saved Options", attach,
+		"Reiniciar opciones guardadas", attach,
 		[this](const Input::Event &e)
 		{
 			if(!app().hasSavedSessionOptions())
 				return;
 			pushAndShowModal(makeView<YesNoAlertView>(
-				"Reset saved options for the currently running system to defaults? Some options only take effect next time the system loads.",
+				"¿Restablecer las opciones guardadas del sistema en ejecución a los valores predeterminados? Algunas opciones solo surtirán efecto la próxima vez que se cargue el sistema.",
 				YesNoAlertView::Delegates
 				{
 					.onYes = [this]
@@ -202,7 +202,7 @@ SystemActionsView::SystemActionsView(ViewAttachParams attach, bool customMenu):
 	},
 	close
 	{
-		"Close Content", attach,
+		"Cerrar contenido", attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShowModal(app().makeCloseContentView(), e);
