@@ -27,14 +27,14 @@ namespace EmuEx
 {
 
 SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
-	TableView{"System Options", attach, item},
+	TableView{"Opciones del sistema", attach, item},
 	autosaveTimerItem
 	{
 		{"Off",    attach, {.id = 0}},
 		{"5min",  attach, {.id = 5}},
 		{"10min", attach, {.id = 10}},
 		{"15min", attach, {.id = 15}},
-		{"Custom Value", attach, [this](const Input::Event &e)
+		{"Valor personalizado", attach, [this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueRangeInputView<int, 0, maxAutosaveSaveFreq.count()>(attachParams(), e, "Input 0 to 720", "",
 					[this](CollectTextInputView &, auto val)
@@ -50,7 +50,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	autosaveTimer
 	{
-		"Timer", attach,
+		"Temporizador", attach,
 		MenuId{app().autosaveManager.saveTimer.frequency.count()},
 		autosaveTimerItem,
 		{
@@ -66,14 +66,14 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	autosaveLaunchItem
 	{
-		{"Main Slot",            attach, {.id = AutosaveLaunchMode::Load}},
-		{"Main Slot (No State)", attach, {.id = AutosaveLaunchMode::LoadNoState}},
-		{"No Save Slot",         attach, {.id = AutosaveLaunchMode::NoSave}},
-		{"Select Slot",          attach, {.id = AutosaveLaunchMode::Ask}},
+		{"Ranura principal",            attach, {.id = AutosaveLaunchMode::Load}},
+		{"Ranura principal (Sin estado)", attach, {.id = AutosaveLaunchMode::LoadNoState}},
+		{"Sin ranura",         attach, {.id = AutosaveLaunchMode::NoSave}},
+		{"Seleccionar ranura",          attach, {.id = AutosaveLaunchMode::Ask}},
 	},
 	autosaveLaunch
 	{
-		"Launch Mode", attach,
+		"Modo launcher", attach,
 		MenuId{app().autosaveManager.autosaveLaunchMode},
 		autosaveLaunchItem,
 		{
@@ -82,9 +82,9 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	autosaveContent
 	{
-		"Content", attach,
+		"Contenido", attach,
 		app().autosaveManager.saveOnlyBackupMemory,
-		"State & Backup RAM", "Only Backup RAM",
+		"Estado y RAM de respaldo", "Solo RAM de respaldo",
 		[this](BoolMenuItem &item)
 		{
 			app().autosaveManager.saveOnlyBackupMemory = item.flipBoolValue(*this);
@@ -92,7 +92,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	confirmOverwriteState
 	{
-		"Confirm Overwrite State", attach,
+		"Confirmar reemplazo de estado", attach,
 		app().confirmOverwriteState,
 		[this](BoolMenuItem &item)
 		{
@@ -106,7 +106,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 		{"4x",    attach, {.id = 400}},
 		{"8x",    attach, {.id = 800}},
 		{"16x",   attach, {.id = 1600}},
-		{"Custom Value", attach,
+		{"Valor personalizado", attach,
 			[this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueRangeInputView<float, 1, 20>(attachParams(), e, "Input above 1.0 to 20.0", "",
@@ -124,7 +124,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	fastModeSpeed
 	{
-		"Fast-forward Speed", attach,
+		"Velocidad de avance rápido", attach,
 		MenuId{app().altSpeed(AltSpeedMode::fast)},
 		fastModeSpeedItem,
 		{
@@ -140,7 +140,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	{
 		{"0.25x", attach, {.id = 25}},
 		{"0.50x", attach, {.id = 50}},
-		{"Custom Value", attach,
+		{"Valor personalizado", attach,
 			[this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueInputView<float>(attachParams(), e, "Input 0.05 up to 1.0", "",
@@ -165,7 +165,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	slowModeSpeed
 	{
-		"Slow-motion Speed", attach,
+		"Velocidad de Slow-motion", attach,
 		MenuId{app().altSpeed(AltSpeedMode::slow)},
 		slowModeSpeedItem,
 		{
@@ -182,10 +182,10 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 		{"0",  attach, {.id = 0}},
 		{"30", attach, {.id = 30}},
 		{"60", attach, {.id = 60}},
-		{"Custom Value", attach, [this](const Input::Event &e)
+		{"Valor personalizado", attach, [this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueRangeInputView<int, 0, 50000>(attachParams(), e,
-					"Input 0 to 50000", std::to_string(app().rewindManager.maxStates),
+					"Ajustar entre 0 y 50000", std::to_string(app().rewindManager.maxStates),
 					[this](CollectTextInputView &, auto val)
 					{
 						app().rewindManager.updateMaxStates(val);
@@ -199,7 +199,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	rewindStates
 	{
-		"States", attach,
+		"Estados", attach,
 		MenuId{app().rewindManager.maxStates},
 		rewindStatesItem,
 		{
@@ -217,11 +217,11 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	rewindTimeInterval
 	{
-		"State Interval (Seconds)", std::to_string(app().rewindManager.saveTimer.frequency.count()), attach,
+		"Intervalo de estados (segundos)", std::to_string(app().rewindManager.saveTimer.frequency.count()), attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShowNewCollectValueRangeInputView<int, 1, 60>(attachParams(), e,
-				"Input 1 to 60", std::to_string(app().rewindManager.saveTimer.frequency.count()),
+				"Ajustar entre 1 y 60", std::to_string(app().rewindManager.saveTimer.frequency.count()),
 				[this](CollectTextInputView &, auto val)
 				{
 					app().rewindManager.saveTimer.frequency = Seconds{val};
@@ -232,9 +232,9 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	performanceMode
 	{
-		"Performance Mode", attach,
+		"Modo de rendimiento", attach,
 		app().useSustainedPerformanceMode,
-		"Normal", "Sustained",
+		"Normal", "Sostenido",
 		[this](BoolMenuItem &item)
 		{
 			app().useSustainedPerformanceMode = item.flipBoolValue(*this);
@@ -242,7 +242,7 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	noopThread
 	{
-		"No-op Thread (Experimental)", attach,
+		"Hilo sin operación (experimental)", attach,
 		(bool)app().useNoopThread,
 		[this](BoolMenuItem &item)
 		{
@@ -251,15 +251,15 @@ SystemOptionView::SystemOptionView(ViewAttachParams attach, bool customMenu):
 	},
 	cpuAffinity
 	{
-		"Configure CPU Affinity", attach,
+		"Configurar afinidad de CPU", attach,
 		[this](const Input::Event &e)
 		{
 			pushAndShow(makeView<CPUAffinityView>(appContext().cpuCount()), e);
 		}
 	},
-	autosaveHeading{"Autosave Options", attach},
-	rewindHeading{"Rewind Options", attach},
-	otherHeading{"Other Options", attach}
+	autosaveHeading{"Opciones de auto-guardado", attach},
+	rewindHeading{"Opciones de rebobinado", attach},
+	otherHeading{"Otras opciones", attach}
 {
 	if(!customMenu)
 	{
