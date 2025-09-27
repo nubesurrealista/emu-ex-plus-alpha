@@ -25,7 +25,7 @@ namespace EmuEx
 RecentContentView::RecentContentView(ViewAttachParams attach, RecentContent &recentContent_):
 	TableView
 	{
-		"Recent Content", attach,
+		"Acciones reciente", attach,
 		[this](TableView::ItemMessage msg)
 		{
 			return msg.visit(overloaded
@@ -37,10 +37,10 @@ RecentContentView::RecentContentView(ViewAttachParams attach, RecentContent &rec
 	},
 	clear
 	{
-		"Clear List", attach,
+		"Limpiar lista", attach,
 		[this](const Input::Event &e)
 		{
-			pushAndShowModal(makeView<YesNoAlertView>("Really clear the list?",
+			pushAndShowModal(makeView<YesNoAlertView>("¿Realmente quieres limpar la lista?",
 				YesNoAlertView::Delegates
 				{
 					.onYes = [this]
