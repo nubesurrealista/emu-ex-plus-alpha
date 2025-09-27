@@ -23,11 +23,11 @@ namespace EmuEx
 {
 
 AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool customMenu):
-	TableView{"Audio Options", attach, item},
+	TableView{"Opciones de audio", attach, item},
 	audio{audio_},
 	snd
 	{
-		"Sound", attach,
+		"Sonido", attach,
 		audio_.isEnabled(),
 		[this](BoolMenuItem &item)
 		{
@@ -36,7 +36,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	soundDuringFastSlowMode
 	{
-		"Sound During Fast/Slow Mode", attach,
+		"Sonido durante modos rápido/lento", attach,
 		audio_.isEnabledDuringAltSpeed(),
 		[this](BoolMenuItem &item)
 		{
@@ -48,7 +48,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 		{"100%", attach, {.id = 100}},
 		{"50%",  attach, {.id = 50}},
 		{"25%",  attach, {.id = 25}},
-		{"Custom Value", attach, [this](const Input::Event &e)
+		{"Valor personalizado", attach, [this](const Input::Event &e)
 			{
 				pushAndShowNewCollectValueRangeInputView<int, 0, 125>(attachParams(), e, "Input 0 to 125", "",
 					[this](CollectTextInputView &, auto val)
@@ -64,7 +64,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	soundVolume
 	{
-		"Volume", attach,
+		"Volumen", attach,
 		MenuId{audio_.maxVolume()},
 		soundVolumeItem,
 		{
@@ -88,7 +88,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	soundBuffers
 	{
-		"Buffer Size In Frames", attach,
+		"Tamaño del búfer en fotogramas", attach,
 		MenuId{audio_.soundBuffers},
 		soundBuffersItem,
 		{
@@ -97,7 +97,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	addSoundBuffersOnUnderrun
 	{
-		"Auto-increase Buffer Size", attach,
+		"Aumentar automáticamente el tamaño del búfer", attach,
 		audio_.addSoundBuffersOnUnderrunSetting,
 		[this](BoolMenuItem &item)
 		{
@@ -127,13 +127,13 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	audioRate
 	{
-		"Sound Rate", attach,
+		"Frecuencia de muestreo de audio", attach,
 		MenuId{audio_.rate()},
 		audioRateItem
 	},
 	audioSoloMix
 	{
-		"Mix With Other Apps", attach,
+		"Mezclar con otras apps", attach,
 		!audio_.manager.soloMix(),
 		[this](BoolMenuItem &item)
 		{
@@ -164,7 +164,7 @@ AudioOptionView::AudioOptionView(ViewAttachParams attach, EmuAudio& audio_, bool
 	},
 	api
 	{
-		"Audio Driver", attach,
+		"Driver de sonido", attach,
 		MenuId{audio_.manager.makeValidAPI(audio_.outputAPI())},
 		apiItem
 	}
